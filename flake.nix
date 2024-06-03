@@ -12,6 +12,7 @@
           buildInputs = with pkgs; [
             cmake
             gcc
+            radare2
             (writeShellScriptBin "rebuild" ''
               set -euo pipefail
 

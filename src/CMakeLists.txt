@@ -13,7 +13,7 @@ endfunction()
 
 function(mktarget_opt TARGET_NAME)
   add_executable(${TARGET_NAME}_opt "${TARGET_NAME}.c")
-  target_compile_options(${TARGET_NAME}_opt PRIVATE -O2)
+  target_compile_options(${TARGET_NAME}_opt PRIVATE -O2 -fno-tree-coalesce-vars)
   set_target_properties(${TARGET_NAME}_opt PROPERTIES OUTPUT_NAME "${TARGET_NAME}_opt")
   target_link_libraries(${TARGET_NAME}_opt PRIVATE instrumentation)
 endfunction()
