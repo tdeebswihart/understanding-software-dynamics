@@ -1,0 +1,34 @@
+#+title: Chapter 2
+
+NOTE: All exercises were run on an Apple M2 chip (2022 macbook air)
+
+* Exercises
+** 2.1
+add - ~1 cycle (when loading from registers). Maybe 2 when loading from L1 cache (3? one for exec, one for read, one for write)
+** 2.2
+Optimized: optimizes the sum away as ~sum~ is unreferenced
+The unoptimized version also spills to the stack so is slower than a register-based add would be
+** 2.3
+We're still optimizing the loop out
+** 2.4
+_opt actually runs and I see ~1 cycle per add. The sum is no longer optimized out. This is the actual loop (copied from radare2's disassembly)
+#+BEGIN_SRC
+│      ┌──> 0x1000019b8      e91780b9       ldrsw x9, [var_14h]        ; 5
+│      ╎│   0x1000019bc      9402098b       add x20, x20, x9 ; the add in question
+│      ╎│   0x1000019c0      08050071       subs w8, w8, 1
+│      └──< 0x1000019c4      a1ffff54       b.ne 0x1000019b8
+#+END_SRC
+** 2.5
+one cycle. `:%s/int/int64_t/g`
+
+** 2.6
+If the number of iterations is too low we're just measuring loop overhead
+** 2.8
+#+BEGIN_SRC
+Cycles per iteration for int64_t +=: 1.01
+Cycles per iteration for int64_t *=: 3.02
+Cycles per iteration for int64_t /=: 7.04
+Cycles per iteration for double +=: 3.01
+Cycles per iteration for double *=: 4.01
+Cycles per iteration for double /=: 10.03
+#+END_SRC
